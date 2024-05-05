@@ -3,40 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Script İzni</title>
+    <title>Roblox Studio Erişim Kontrolü</title>
 </head>
 <body>
-    <h1>Roblox Script İzni</h1>
-    <p>Scripte izin vermek için aşağıdaki kutuyu işaretleyin:</p>
-    <input type="checkbox" id="permissionCheckbox">
-    <label for="permissionCheckbox">İzin veriyorum</label>
-    <button onclick="sendPermission()">İzni Gönder</button>
-
+    <h1>Roblox Studio Erişim Kontrolü</h1>
+    <p id="status">Roblox Studio şu anda erişim sağlamıyor.</p>
     <script>
-        function sendPermission() {
-            var permission = document.getElementById("permissionCheckbox").checked;
-            var data = {
-                permission: permission
-            };
-
-            fetch('/sendPermission', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message === "izin alındı") {
-                    alert("İzin alındı! Roblox Script çalıştırılabilir.");
-                } else {
-                    alert("İzin verilmedi! Roblox Script çalıştırılamaz.");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        // Bu fonksiyon, Roblox Studio'dan gelen veriyi alır ve durumu günceller
+        function receiveDataFromRobloxStudio(data) {
+            if (data && data.access === true) {
+                document.getElementById("status").innerText = "Roblox Studio erişim sağladı.";
+            } else {
+                document.getElementById("status").innerText = "Roblox Studio erişim sağlamıyor.";
+            }
         }
     </script>
 </body>
