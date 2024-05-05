@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox İzin Kontrolü</title>
+</head>
+<body>
+    <h1>Roblox İzin Kontrolü</h1>
+    <p>Lütfen aşağıdaki onay kutusunu işaretleyin:</p>
+    <input type="checkbox" id="permissionCheckbox">
+    <label for="permissionCheckbox">Roblox Scriptlerini Kullanmayı Kabul Ediyorum</label>
+    
+    <script>
+        // Onay kutusunun durumunu kontrol eden fonksiyon
+        function checkPermission() {
+            var permissionCheckbox = document.getElementById("permissionCheckbox");
+            var canUseScript = permissionCheckbox.checked;
+
+            if (canUseScript) {
+                alert("İzin alındı. Roblox scriptleri kullanabilirsiniz!");
+                // Roblox Studio'ya veri gönderme
+                fetch("ROBLOX_STUDIO_SCRIPT_URL_BURAYA_YAZILMALI", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ canUseScript: canUseScript })
+                });
+            } else {
+                alert("İzin verilmedi. Roblox scriptleri kullanamazsınız!");
+            }
+        }
+
+        // Onay durumunu kontrol etmek için butonun tıklama olayını dinle
+        document.getElementById("permissionCheckbox").addEventListener("change", checkPermission);
+    </script>
+</body>
+</html>
